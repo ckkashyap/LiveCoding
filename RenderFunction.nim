@@ -4,7 +4,7 @@ import math
 const RQBytesPerSample = 4  # 16 bit PCM
 
 let M = 1.0595
-var Frequence = 880     # Hz
+var Frequence = 880 * M * M    # Hz
 let Volume = 0.05         # [0..1]
 
 let SampleRate = 44100    # Hz

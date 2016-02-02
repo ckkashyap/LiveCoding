@@ -62,6 +62,14 @@ proc SetupAudio() =
 
                 
 SetupAudio()
+
+var lastWriteTime = getFileInfo("RenderFunction.nim").lastWriteTime
 while true:
-      echo "B"
-      sleep 1000
+        if lastWriteTime < getFileInfo("RenderFunction.nim").lastWriteTime:
+                discard execShellCmd("nim c --app:lib RenderFunction.nim")
+                lastWriteTime = getFileInfo("RenderFunction.nim").lastWriteTime
+                unloadLib(RenderFunctionHandle)
+                RenderFunctionHandle = loadLib(RenderLibName)
+                symbol = symAddr(RenderFunctionHandle, "render")
+                renderFunc = cast[RenderFuncType](symbol)
+        sleep 1000
